@@ -1,45 +1,44 @@
-{% set name = "<PLEASE ADD PKG NAME>" %}
-{% set version = "<PLEASE ADD PKG VERSION>" %}
+{% set name = "xorg-font-util" %}
+{% set version = "1.4.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: <sha256>
+  url: https://gitlab.freedesktop.org/xorg/font/util/-/archive/font-util-{{ version }}/util-font-util-{{ version }}.tar.gz
+  sha256: f0129159515c13ebe53ba2a6a94755e98c266470e844ee0aacc6196fd62b44f0
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True  # [py<38]
+  skip: True  # [win]
 
 requirements:
-  host:
-    - python
-    - pip
-  run:
-    - python
+  build:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
+    - pkg-config
+    - make
+    - autoconf
+    - automake
+    - xorg-util-macros >=1.8
 
 test:
-  imports:
-    - {{ name.replace('-', '.') }}
   requires:
-    - pip
+    - pkg-config
   commands:
-    - pip check
+    - pkg-config --exists fontutil
 
 about:
-  home: <PLEASE ADD HOME URL>
-  summary: <PLEASE ADD SUMMARY>
-  description: |
-    <PLEASE ADD DESCRIPTION>
-  license: <PLEASE ADD LICENSE>
-  license_family: <PLEASE ADD LICENSE_FAMILY>
-  license_file: <PLEASE_ADD_LICENSE_FILE>
-  dev_url: <PLEASE ADD DEV URL>
-  doc_url: <PLEASE ADD DOC URL>
+  home: https://www.x.org/
+  summary: X.Org font package creation/installation utilities
+  description: X.Org font package creation/installation utilities
+  license: MIT
+  license_family: MIT
+  license_file: COPYING
+  dev_url: https://gitlab.freedesktop.org/xorg/font/util
+  doc_url: https://www.x.org/wiki/Documentation/
 
 extra:
   recipe-maintainers:
-    - Jrice1317
+    - ViridianMelody
