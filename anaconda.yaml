@@ -4,6 +4,6 @@ upstream_sources:
       identifier: xorg/font/util
       host: gitlab.freedesktop.org
       use_max_tag: true
+      from_pattern: (?i)^XORG-(\d+)_(\d+)$
+      to_pattern: \1.\2
       exclude_regex: (?i)(?:^|[-._])(?:rc\d*|alpha\d*|beta\d*|pre\d+|preview|dev\d+)(?:[-._]|$)
-      from_pattern: ^v?(\d+(?:\.\d+)*.*)$
-      to_pattern: \1
